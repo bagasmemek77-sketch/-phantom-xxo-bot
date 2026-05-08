@@ -572,4 +572,15 @@ def main():
     log(f"🎭 Selesai, failure state disimpan, CSV updated...\n")
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        error_msg = f"❌ FATAL ERROR: {str(e)}"
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] {error_msg}")
+        # Try to send to Telegram jika possible
+        try:
+            send_telegram(f"🚨 *PHANTOM XXO CRASH*: {str(e)[:100]}")
+        except:
+            pass
+        # Exit gracefully instead of crash
+        exit(1)
