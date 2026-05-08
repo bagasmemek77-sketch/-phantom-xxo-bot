@@ -22,6 +22,7 @@ import random
 import requests
 import re
 import csv
+import traceback
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 from pathlib import Path
@@ -464,6 +465,27 @@ def main():
         msg = f"❌ *ERROR*: BTC Address format tidak valid!\nAlamat: {BTC_ADDRESS[:15]}... (tidak sesuai P2PKH/P2SH/bech32)"
         log(msg)
         send_telegram(msg)
+        
+        # Trigger email notification untuk admin
+        error_details = f"""
+BTC Address Validation Error
+=============================
+Status: CRITICAL - Bot tidak bisa klaim tanpa BTC address valid
+Received: {BTC_ADDRESS[:20]}...
+Expected Format: P2PKH (1xxx), P2SH (3xxx), atau bech32 (bc1xxx)
+
+Action Required:
+1. Set GitHub Secret CAKE_BTC_ADDR dengan BTC wallet address yang valid
+2. Address harus start dengan: 1, 3, atau bc1
+3. Length: 25-35 characters untuk P2PKH/P2SH, 42-62 untuk bech32
+
+Repository: bagasmemek77-sketch/-phantom-xxo-bot
+Timestamp: {datetime.now().isoformat()}
+"""
+        try:
+            os.system(f"python notify_admin.py 'BTC Address Validation Failed' '{error_details}' 'bagasmemek77@gmail.com'")
+        except:
+            pass
         return
 
     log(f"✅ BTC Address valid: {BTC_ADDRESS[:10]}...")
@@ -582,5 +604,31 @@ if __name__ == "__main__":
             send_telegram(f"🚨 *PHANTOM XXO CRASH*: {str(e)[:100]}")
         except:
             pass
+        
+        # Trigger email notification untuk admin - fatal error yang butuh bantuan coding
+        try:
+            import traceback
+            error_details = f"""
+FATAL ERROR - Bot Crash Report
+================================
+Error Type: {type(e).__name__}
+Error Message: {str(e)}
+
+Traceback:
+{traceback.format_exc()[:1000]}
+
+Bot Status: CRASHED
+Repository: bagasmemek77-sketch/-phantom-xxo-bot
+Timestamp: {datetime.now().isoformat()}
+
+Required Action:
+1. Check GitHub Actions log untuk lebih details
+2. Review error message dan apakah ada code yang perlu di-fix
+3. Reply email ini atau create issue di GitHub jika butuh bantuan coding
+"""
+            os.system(f"python notify_admin.py 'FATAL: Bot Crash - Code Fix Needed' '{error_details}' 'bagasmemek77@gmail.com'")
+        except:
+            pass
+        
         # Exit gracefully instead of crash
         exit(1)
