@@ -140,7 +140,7 @@ class SessionManager:
             self.sessions[faucet_name].close()
             del self.sessions[faucet_name]
 
-session_manager = SessionManager()
+session_manager = None  # Will be initialized in main()
 
 # ========== VALIDASI ==========
 def validate_btc_address(addr: str) -> bool:
@@ -451,6 +451,9 @@ def claim_via_browser(faucet: Dict) -> Tuple[bool, str]:
 
 # ========== EKSEKUSI UTAMA ==========
 def main():
+    global session_manager
+    session_manager = SessionManager()
+    
     log("💀 Phantom XXO Ghost - START")
 
     if DRY_RUN:
