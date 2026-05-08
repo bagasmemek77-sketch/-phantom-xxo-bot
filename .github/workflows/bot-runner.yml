@@ -1,0 +1,61 @@
+name: 🚀 Phantom XXO Auto Claim
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # Tiap jam
+  workflow_dispatch:      # Bisa dijalankan manual
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🐍 Setup Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install requests playwright
+          playwright install --with-deps chromium
+
+      - name: 👻 Jalankan Bot
+        env:
+          CAKE_BTC_ADDR: ${{ secrets.CAKE_BTC_ADDR }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DYNAMIC_FAUCET_URL: ${{ secrets.DYNAMIC_FAUCET_URL }}
+          DRY_RUN: ${{ secrets.DRY_RUN || 'false' }}
+        run: python faucet_ghost.py
+
+      - name: 📝 Commit & Push Results
+        run: |
+          git config --global user.email "phantom@xxo-bot.local"
+          git config --global user.name "Phantom XXO Bot"
+          
+          # Check if there are changes
+          if git diff --quiet HEAD; then
+            echo "✅ No changes to commit"
+          else
+            git add claim_history.csv faucet_failure_state.json faucet_list.json
+            git commit -m "🤖 Auto-update: $(date +'%Y-%m-%d %H:%M:%S UTC')" || true
+            git push origin main || true
+            echo "✅ Changes pushed to main"
+          fi
+        continue-on-error: true
+
+      - name: 📊 Show Results
+        run: |
+          echo "=== Last 5 Claims ==="
+          tail -5 claim_history.csv || echo "No claim history yet"
+          echo ""
+          echo "=== Failure State ==="
+          cat faucet_failure_state.json || echo "No failure state yet"

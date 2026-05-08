@@ -1,0 +1,104 @@
+[
+    {
+        "name": "FreeBitco.in",
+        "method": "post",
+        "url": "https://freebitco.in/cgi-bin/freebitco.pl",
+        "data": {
+            "op": "r",
+            "addr": "___ADDR___"
+        },
+        "enabled": true
+    },
+    {
+        "name": "FreeDoge.co.in",
+        "method": "post",
+        "url": "https://freedoge.co.in/cgi-bin/freedoge.pl",
+        "data": {
+            "op": "r",
+            "addr": "___ADDR___"
+        },
+        "enabled": true
+    },
+    {
+        "name": "CoinFaucet.io",
+        "method": "browser",
+        "url": "https://coinfaucet.io",
+        "data": {},
+        "enabled": true,
+        "note": "Auto-fill & click via Playwright"
+    },
+    {
+        "name": "BitcoinZ Faucet",
+        "method": "post",
+        "url": "https://faucet.bitcoinz.site/api/faucet/claim",
+        "data": {
+            "address": "___ADDR___",
+            "action": "claim"
+        },
+        "enabled": true
+    },
+    {
+        "name": "Claim Bitcoin Free",
+        "method": "post",
+        "url": "https://claimbitcoin.net/api/claim",
+        "data": {
+            "wallet": "___ADDR___"
+        },
+        "enabled": true
+    },
+    {
+        "name": "AutoFaucet Bitcoin",
+        "method": "post",
+        "url": "https://auto-faucet.bitcoinbox.org/claim.php",
+        "data": {
+            "btc_address": "___ADDR___",
+            "submit": "Claim"
+        },
+        "enabled": true
+    },
+    {
+        "name": "Faucet Crypto Daily",
+        "method": "post",
+        "url": "https://faucetcryptodaily.com/api/claim",
+        "data": {
+            "address": "___ADDR___"
+        },
+        "enabled": true
+    },
+    {
+        "name": "Moon Bitcoin",
+        "method": "browser",
+        "url": "https://moonbitcoin.org",
+        "data": {},
+        "enabled": true,
+        "note": "Auto-claim via browser"
+    },
+    {
+        "name": "BTC Free Claim",
+        "method": "post",
+        "url": "https://btc.freeclaim.io/api/claim",
+        "data": {
+            "addr": "___ADDR___"
+        },
+        "enabled": true
+    },
+    {
+        "name": "Dogecoin Claim",
+        "method": "post",
+        "url": "https://doge.freeclaim.io/api/claim",
+        "data": {
+            "address": "___ADDR___"
+        },
+        "enabled": true
+    },
+    {
+        "name": "BTC Instant Faucet",
+        "method": "post",
+        "url": "https://instant-btc-faucet.com/claim.php",
+        "data": {
+            "bitcoin_address": "___ADDR___",
+            "claim": "true"
+        },
+        "enabled": true
+    }
+]
