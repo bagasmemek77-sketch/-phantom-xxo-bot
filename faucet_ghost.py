@@ -27,6 +27,10 @@ from typing import Dict, List, Optional, Tuple
 from pathlib import Path
 from urllib.parse import urlencode
 
+
+def log(msg: str):
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
+
 # ========== AMBIL KONFIGURASI DARI SECRETS & ENV ==========
 BTC_ADDRESS = os.environ.get("CAKE_BTC_ADDR", "").strip()
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
@@ -152,9 +156,6 @@ def validate_btc_address(addr: str) -> bool:
     return any(re.match(pattern, addr) for pattern in patterns)
 
 # ========== FUNGSI PEMBANTU ==========
-def log(msg: str):
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
-
 def log_claim(faucet_name: str, method: str, status: str, error_msg: str = ""):
     """Log claim attempt ke CSV."""
     try:
