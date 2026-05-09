@@ -18,7 +18,7 @@
       "op": "r",
       "addr": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 1
   },
   {
@@ -26,7 +26,7 @@
     "method": "browser",
     "url": "https://coinfaucet.io",
     "data": {},
-    "enabled": true,
+    "enabled": false,
     "priority": 2
   },
   {
@@ -34,7 +34,7 @@
     "method": "browser",
     "url": "https://moonbitcoin.org",
     "data": {},
-    "enabled": true,
+    "enabled": false,
     "priority": 2
   },
   {
@@ -45,7 +45,7 @@
       "address": "___ADDR___",
       "claim": "true"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 1
   },
   {
@@ -55,7 +55,7 @@
     "data": {
       "wallet": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 1
   },
   {
@@ -65,7 +65,7 @@
     "data": {
       "btc_addr": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 2
   },
   {
@@ -75,7 +75,7 @@
     "data": {
       "address": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 1
   },
   {
@@ -85,7 +85,7 @@
     "data": {
       "addr": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 2
   },
   {
@@ -93,7 +93,7 @@
     "method": "browser",
     "url": "https://bitcoinspinner.com",
     "data": {},
-    "enabled": true,
+    "enabled": false,
     "priority": 2
   },
   {
@@ -103,7 +103,7 @@
     "data": {
       "wallet_address": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 1
   },
   {
@@ -113,7 +113,7 @@
     "data": {
       "address": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 2
   },
   {
@@ -123,7 +123,7 @@
     "data": {
       "coin_address": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 1
   },
   {
@@ -133,7 +133,7 @@
     "data": {
       "xmr_address": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 1
   },
   {
@@ -143,7 +143,7 @@
     "data": {
       "addr": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 2
   },
   {
@@ -153,7 +153,7 @@
     "data": {
       "address": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 1
   },
   {
@@ -163,7 +163,7 @@
     "data": {
       "wallet": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 2
   },
   {
@@ -173,7 +173,7 @@
     "data": {
       "address": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 1
   },
   {
@@ -181,7 +181,7 @@
     "method": "browser",
     "url": "https://faucetmania.io",
     "data": {},
-    "enabled": true,
+    "enabled": false,
     "priority": 2
   },
   {
@@ -192,7 +192,7 @@
       "btc_address": "___ADDR___",
       "action": "claim"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 1
   },
   {
@@ -202,7 +202,7 @@
     "data": {
       "coin_addr": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 2
   },
   {
@@ -212,7 +212,7 @@
     "data": {
       "address": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 1
   },
   {
@@ -222,7 +222,7 @@
     "data": {
       "addr": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 2
   },
   {
@@ -232,7 +232,7 @@
     "data": {
       "wallet_addr": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 1
   },
   {
@@ -242,7 +242,7 @@
     "data": {
       "address": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 2
   },
   {
@@ -250,7 +250,7 @@
     "method": "browser",
     "url": "https://faucetcapital.com",
     "data": {},
-    "enabled": true,
+    "enabled": false,
     "priority": 2
   },
   {
@@ -260,7 +260,7 @@
     "data": {
       "btc_addr": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 1
   },
   {
@@ -270,7 +270,7 @@
     "data": {
       "address": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 2
   },
   {
@@ -280,7 +280,7 @@
     "data": {
       "addr": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 1
   },
   {
@@ -290,7 +290,7 @@
     "data": {
       "wallet": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 2
   }
 ]
