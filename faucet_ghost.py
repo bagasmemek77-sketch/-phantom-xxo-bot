@@ -143,19 +143,6 @@ class SessionManager:
 
 session_manager = None  # Will be initialized in main()
 
-# ========== VALIDASI ==========
-def validate_btc_address(addr: str) -> bool:
-    """Validasi format alamat BTC (P2PKH, P2SH, bech32)."""
-    if not addr or len(addr) < 26:
-        return False
-    # Pattern untuk BTC address
-    patterns = [
-        r"^1[a-zA-Z0-9]{25,34}$",     # P2PKH (1...)
-        r"^3[a-zA-Z0-9]{25,34}$",     # P2SH (3...)
-        r"^bc1[a-z0-9]{39,59}$",      # bech32 (bc1...)
-    ]
-    return any(re.match(pattern, addr) for pattern in patterns)
-
 # ========== FUNGSI PEMBANTU ==========
 def log_claim(faucet_name: str, method: str, status: str, error_msg: str = ""):
     """Log claim attempt ke CSV."""
