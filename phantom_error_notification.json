@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-05-08T12:21:51.381711",
+  "type": "BOT_ERROR_REPORT",
+  "error_title": "BTC Address Validation Failed",
+  "error_details": "\nBTC Address Validation Error\n=============================\nStatus: CRITICAL - Bot tidak bisa klaim tanpa BTC address valid\nReceived: ...\nExpected Format: P2PKH (1xxx), P2SH (3xxx), atau bech32 (bc1xxx)\n\nAction Required:\n1. Set GitHub Secret CAKE_BTC_ADDR dengan BTC wallet address yang valid\n2. Address harus start dengan: 1, 3, atau bc1\n3. Length: 25-35 characters untuk P2PKH/P2SH, 42-62 untuk bech32\n\nRepository: bagasmemek77-sketch/-phantom-xxo-bot\nTimestamp: 2026-05-08T12:21:51.251435\n",
+  "admin_email": "bagasmemek77@gmail.com",
+  "source": "Phantom XXO Bot Runner",
+  "action_required": true
+}
