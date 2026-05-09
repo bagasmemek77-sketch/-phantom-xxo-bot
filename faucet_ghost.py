@@ -305,16 +305,42 @@ def reset_faucet_failure(failure_state: Dict[str, int], faucet_name: str):
     if faucet_name in failure_state:
         failure_state[faucet_name] = 0
 
-def validate_btc_address(addr: str) -> bool:
-    """Validasi format alamat BTC (P2PKH, P2SH, bech32)."""
-    if not addr or len(addr) < 26:
-        return False
+def validate_btc_address(addr: str) -> tuple:
+    """
+    Validasi format alamat crypto - BTC, Monero, Ethereum, Dogecoin, dll.
+    Returns: (is_valid: bool, coin_type: str)
+    """
+    if not addr or len(addr) < 20:
+        return False, "UNKNOWN"
+    
     patterns = [
-        r"^1[a-zA-Z0-9]{25,34}$",     # P2PKH (1...)
-        r"^3[a-zA-Z0-9]{25,34}$",     # P2SH (3...)
-        r"^bc1[a-z0-9]{39,59}$",      # bech32 (bc1...)
+        # Bitcoin
+        (r"^1[a-zA-Z0-9]{25,34}$", "BTC", "P2PKH"),
+        (r"^3[a-zA-Z0-9]{25,34}$", "BTC", "P2SH"),
+        (r"^bc1[a-z0-9]{39,59}$", "BTC", "Bech32"),
+        
+        # Monero (XMR) - 95 char standard, 106 char integrated
+        (r"^[48][0-9a-zA-Z]{94}$", "XMR", "Monero"),
+        (r"^[89A-NP-Za-km-z1-9]{95}$", "XMR", "Monero"),
+        
+        # Ethereum & ERC20
+        (r"^0x[a-fA-F0-9]{40}$", "ETH", "Ethereum"),
+        
+        # Dogecoin
+        (r"^D[1-9A-HJ-NP-Z]{25,34}$", "DOGE", "Dogecoin"),
+        
+        # Litecoin
+        (r"^[LM3][a-km-zA-HJ-NP-Z1-9]{26,33}$", "LTC", "Litecoin"),
+        
+        # Generic: 26+ alphanumeric (fallback)
+        (r"^[1-9A-HJ-NP-Za-km-z]{26,106}$", "OTHER", "Generic"),
     ]
-    return any(re.match(pattern, addr) for pattern in patterns)
+    
+    for pattern, coin, coin_type in patterns:
+        if re.match(pattern, addr):
+            return True, coin
+    
+    return False, "UNKNOWN"
 
 def claim_via_post(faucet: Dict, retry: int = 0) -> Tuple[bool, str]:
     """Klaim faucet metode POST dengan retry otomatis + anti-detection."""
@@ -460,35 +486,45 @@ def main():
     if DRY_RUN:
         log("🏃 DRY-RUN MODE - Tidak akan klaim sebenarnya!")
 
-    # 1. Validasi BTC Address
-    if not validate_btc_address(BTC_ADDRESS):
-        msg = f"❌ *ERROR*: BTC Address format tidak valid!\nAlamat: {BTC_ADDRESS[:15]}... (tidak sesuai P2PKH/P2SH/bech32)"
+    # 1. Validasi Crypto Address
+    is_valid, coin_type = validate_btc_address(BTC_ADDRESS)
+    if not is_valid:
+        msg = f"❌ *ERROR*: Wallet Address format tidak valid!\nAlamat: {BTC_ADDRESS[:15]}... (format tidak dikenali)"
         log(msg)
         send_telegram(msg)
         
         # Trigger email notification untuk admin
         error_details = f"""
-BTC Address Validation Error
+Wallet Address Validation Error
 =============================
-Status: CRITICAL - Bot tidak bisa klaim tanpa BTC address valid
+Status: CRITICAL - Bot tidak bisa klaim tanpa wallet address valid
 Received: {BTC_ADDRESS[:20]}...
-Expected Format: P2PKH (1xxx), P2SH (3xxx), atau bech32 (bc1xxx)
+Coin: {coin_type}
+Length: {len(BTC_ADDRESS)}
+
+Supported Formats:
+1. Bitcoin (BTC): 
+   - P2PKH (1xxx), P2SH (3xxx), bech32 (bc1xxx)
+   - 26-34 chars (P2PKH/P2SH), 42-62 chars (bech32)
+2. Monero (XMR): 95 characters, starts with 4 or 8
+3. Ethereum (ETH): 42 chars, starts with 0x
+4. Dogecoin (DOGE): starts with D
+5. Litecoin (LTC): starts with L, M, or 3
 
 Action Required:
-1. Set GitHub Secret CAKE_BTC_ADDR dengan BTC wallet address yang valid
-2. Address harus start dengan: 1, 3, atau bc1
-3. Length: 25-35 characters untuk P2PKH/P2SH, 42-62 untuk bech32
+1. Set GitHub Secret CAKE_BTC_ADDR dengan wallet address yang valid dari coins diatas
+2. Verify format sesuai spesifikasi
 
 Repository: bagasmemek77-sketch/-phantom-xxo-bot
 Timestamp: {datetime.now().isoformat()}
 """
         try:
-            os.system(f"python notify_admin.py 'BTC Address Validation Failed' '{error_details}' 'bagasmemek77@gmail.com'")
+            os.system(f"python notify_admin.py 'Wallet Address Validation Failed' '{error_details}' 'bagasmemek77@gmail.com'")
         except:
             pass
         return
 
-    log(f"✅ BTC Address valid: {BTC_ADDRESS[:10]}...")
+    log(f"✅ Wallet Address valid: {BTC_ADDRESS[:10]}... ({coin_type})")
     log(f"🔧 Proxy enabled: {len(session_manager.proxies)} proxies loaded")
 
     # 2. Load persistent failure state
