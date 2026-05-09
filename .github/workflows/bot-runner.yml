@@ -2,7 +2,7 @@ name: 🚀 Phantom XXO Auto Claim
 
 on:
   schedule:
-    - cron: '0 * * * *'   # Tiap jam
+    - cron: '*/30 * * * *'   # Setiap 30 menit (48x per hari, +100% increase)
   workflow_dispatch:      # Bisa dijalankan manual
 
 jobs:

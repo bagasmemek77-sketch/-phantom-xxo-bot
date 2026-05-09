@@ -23,6 +23,8 @@ import requests
 import re
 import csv
 import traceback
+import asyncio
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 from pathlib import Path
@@ -44,6 +46,20 @@ WORKSPACE = os.environ.get("GITHUB_WORKSPACE", "/workspaces/-phantom-xxo-bot")
 FAUCET_LIST_PATH = os.path.join(WORKSPACE, "faucet_list.json")
 FAILURE_STATE_PATH = os.path.join(WORKSPACE, "faucet_failure_state.json")
 CLAIM_HISTORY_PATH = os.path.join(WORKSPACE, "claim_history.csv")
+
+# ========== ADAPTIVE THROTTLING CONFIG (Anti-Ban Safety) ==========
+# Jika success rate turun drastis, bot otomatis slow down
+ADAPTIVE_THROTTLE = {
+    "enabled": True,
+    "normal_workers": 5,           # Parallel threads (5 = 5 faucets simultaneously)
+    "safe_workers": 2,             # Fallback jika suspected ban
+    "base_delay_min": 2,           # Min delay antar batch
+    "base_delay_max": 5,           # Max delay antar batch
+    "current_workers": 5,          # Akan di-adjust runtime
+    "throttle_threshold": 0.15,    # Jika success rate < 15%, throttle down
+}
+
+ADAPTIVE_THROTTLE["current_workers"] = ADAPTIVE_THROTTLE["normal_workers"]
 
 # ========== ANTI-DETECTION: USER-AGENTS ==========
 USER_AGENTS = [
@@ -543,54 +559,71 @@ Timestamp: {datetime.now().isoformat()}
     fail = 0
     dry_run_count = 0
     report = []
-
-    for idx, faucet in enumerate(enabled_faucets, 1):
-        log(f"\n[{idx}/{len(enabled_faucets)}] Mencoba {faucet['name']}...")
-
+    
+    # Function untuk claim satu faucet (dipanggil dari thread pool)
+    def claim_faucet(faucet: Dict) -> Tuple[str, bool, str]:
+        """Thread-safe faucet claiming function."""
         try:
             method = faucet.get("method", "post")
             result, error_msg = claim_via_browser(faucet) if method == "browser" else claim_via_post(faucet)
-
+            
             status = "SUCCESS" if result else "FAIL"
             if DRY_RUN:
                 status = "DRY_RUN"
-                dry_run_count += 1
-
+            
             log_claim(faucet['name'], method, status, error_msg)
-
+            return faucet['name'], result, error_msg
+            
+        except Exception as e:
+            error_msg = str(e)
+            log(f"  ❌ ERROR on {faucet['name']}: {error_msg}")
+            log_claim(faucet['name'], faucet.get("method", "post"), "ERROR", error_msg)
+            return faucet['name'], False, error_msg
+    
+    # Parallel claiming dengan adaptive workers
+    log(f"\n🚀 PARALLEL CLAIMING: {len(enabled_faucets)} faucets dengan {ADAPTIVE_THROTTLE['current_workers']} workers")
+    
+    with ThreadPoolExecutor(max_workers=ADAPTIVE_THROTTLE['current_workers']) as executor:
+        futures = {executor.submit(claim_faucet, faucet): faucet for faucet in enabled_faucets}
+        
+        for future in as_completed(futures):
+            faucet_name, result, error_msg = future.result()
+            faucet = futures[future]
+            
             if result:
-                log("  ✅ SUKSES")
+                log(f"  ✅ {faucet_name} SUCCESS")
                 success += 1
-                report.append(f"✅ {faucet['name']}")
-                reset_faucet_failure(failure_state, faucet['name'])
+                report.append(f"✅ {faucet_name}")
+                reset_faucet_failure(failure_state, faucet_name)
             else:
-                log(f"  ❌ GAGAL: {error_msg}")
+                log(f"  ❌ {faucet_name} FAIL: {error_msg[:50]}")
                 fail += 1
-                report.append(f"❌ {faucet['name']}")
-
+                report.append(f"❌ {faucet_name}")
+                
                 # Check if need to disable (3x gagal)
-                should_disable = record_faucet_failure(failure_state, faucet['name'])
+                should_disable = record_faucet_failure(failure_state, faucet_name)
                 if should_disable:
                     faucet["enabled"] = False
-                    log(f"  🔴 Auto-disabled: {faucet['name']}")
-                    report.append(f"🔴 {faucet['name']} (disabled)")
-
+                    log(f"  🔴 Auto-disabled: {faucet_name}")
+                    
                 # Save failure state
                 save_failure_state(failure_state)
                 save_faucet_list(all_faucets)
-
-        except Exception as e:
-            error_msg = str(e)
-            log(f"  ❌ ERROR: {error_msg}")
-            log_claim(faucet['name'], method, "ERROR", error_msg)
-            fail += 1
-            report.append(f"❌ {faucet['name']} (error)")
-
-        # Jeda acak 30-120 detik antar faucet (ANTI-DETECTION)
-        if idx < len(enabled_faucets):
-            sleep_time = random.randint(30, 120)
-            log(f"⏳ Tunggu {sleep_time}s sebelum faucet berikutnya... (anti-detection)")
-            time.sleep(sleep_time)
+            
+            # Adaptive throttle: jika success rate turun drastis, slow down
+            if (success + fail) % 5 == 0:  # Check every 5 claims
+                current_rate = success / (success + fail) if (success + fail) > 0 else 0
+                if current_rate < ADAPTIVE_THROTTLE['throttle_threshold']:
+                    if ADAPTIVE_THROTTLE['current_workers'] > ADAPTIVE_THROTTLE['safe_workers']:
+                        ADAPTIVE_THROTTLE['current_workers'] = ADAPTIVE_THROTTLE['safe_workers']
+                        log(f"⚠️ THROTTLE DOWN: Suspected ban detected, reducing workers to {ADAPTIVE_THROTTLE['safe_workers']}")
+                        send_telegram(f"⚠️ Success rate dropped to {current_rate*100:.0f}%, throttling down to {ADAPTIVE_THROTTLE['safe_workers']} workers")
+    
+    # Adaptive delay antara batch dalam parallel mode
+    if success + fail < len(enabled_faucets):
+        delay = random.randint(ADAPTIVE_THROTTLE['base_delay_min'], ADAPTIVE_THROTTLE['base_delay_max'])
+        log(f"⏳ Adaptive delay {delay}s antar batch...")
+        time.sleep(delay)
 
     # 5. Simpan final state dan generate report
     save_failure_state(failure_state)
