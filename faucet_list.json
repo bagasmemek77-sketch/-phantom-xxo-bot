@@ -1,242 +1,296 @@
 [
-    {
-        "name": "FreeBitco.in",
-        "method": "post",
-        "url": "https://freebitco.in/cgi-bin/freebitco.pl",
-        "data": {"op": "r", "addr": "___ADDR___"},
-        "enabled": true,
-        "priority": 1
+  {
+    "name": "FreeBitco.in",
+    "method": "post",
+    "url": "https://freebitco.in/cgi-bin/freebitco.pl",
+    "data": {
+      "op": "r",
+      "addr": "___ADDR___"
     },
-    {
-        "name": "FreeDoge.co.in",
-        "method": "post",
-        "url": "https://freedoge.co.in/cgi-bin/freedoge.pl",
-        "data": {"op": "r", "addr": "___ADDR___"},
-        "enabled": true,
-        "priority": 1
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "name": "FreeDoge.co.in",
+    "method": "post",
+    "url": "https://freedoge.co.in/cgi-bin/freedoge.pl",
+    "data": {
+      "op": "r",
+      "addr": "___ADDR___"
     },
-    {
-        "name": "CoinFaucet.io",
-        "method": "browser",
-        "url": "https://coinfaucet.io",
-        "data": {},
-        "enabled": true,
-        "priority": 2
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "name": "CoinFaucet.io",
+    "method": "browser",
+    "url": "https://coinfaucet.io",
+    "data": {},
+    "enabled": true,
+    "priority": 2
+  },
+  {
+    "name": "Moon Bitcoin",
+    "method": "browser",
+    "url": "https://moonbitcoin.org",
+    "data": {},
+    "enabled": true,
+    "priority": 2
+  },
+  {
+    "name": "BTC Instant Faucet",
+    "method": "post",
+    "url": "https://instant-btc-faucet.com/claim.php",
+    "data": {
+      "address": "___ADDR___",
+      "claim": "true"
     },
-    {
-        "name": "Moon Bitcoin",
-        "method": "browser",
-        "url": "https://moonbitcoin.org",
-        "data": {},
-        "enabled": true,
-        "priority": 2
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "name": "Crypto Faucet Hub",
+    "method": "post",
+    "url": "https://cryptofaucethub.com/api/claim",
+    "data": {
+      "wallet": "___ADDR___"
     },
-    {
-        "name": "BTC Instant Faucet",
-        "method": "post",
-        "url": "https://instant-btc-faucet.com/claim.php",
-        "data": {"address": "___ADDR___", "claim": "true"},
-        "enabled": true,
-        "priority": 1
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "name": "Daily Bitcoin Rewards",
+    "method": "post",
+    "url": "https://dailybitcoinrewards.com/claim.php",
+    "data": {
+      "btc_addr": "___ADDR___"
     },
-    {
-        "name": "Crypto Faucet Hub",
-        "method": "post",
-        "url": "https://cryptofaucethub.com/api/claim",
-        "data": {"wallet": "___ADDR___"},
-        "enabled": true,
-        "priority": 1
+    "enabled": true,
+    "priority": 2
+  },
+  {
+    "name": "Faucet Hubz",
+    "method": "post",
+    "url": "https://faucethubz.com/api/claim",
+    "data": {
+      "address": "___ADDR___"
     },
-    {
-        "name": "Daily Bitcoin Rewards",
-        "method": "post",
-        "url": "https://dailybitcoinrewards.com/claim.php",
-        "data": {"btc_addr": "___ADDR___"},
-        "enabled": true,
-        "priority": 2
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "name": "Earn BTC Free",
+    "method": "post",
+    "url": "https://earnbtcfree.net/api/claim",
+    "data": {
+      "addr": "___ADDR___"
     },
-    {
-        "name": "Faucet Hubz",
-        "method": "post",
-        "url": "https://faucethubz.com/api/claim",
-        "data": {"address": "___ADDR___"},
-        "enabled": true,
-        "priority": 1
+    "enabled": true,
+    "priority": 2
+  },
+  {
+    "name": "Bitcoin Spinner",
+    "method": "browser",
+    "url": "https://bitcoinspinner.com",
+    "data": {},
+    "enabled": true,
+    "priority": 2
+  },
+  {
+    "name": "Faucet Premium",
+    "method": "post",
+    "url": "https://faucetpremium.io/claim",
+    "data": {
+      "wallet_address": "___ADDR___"
     },
-    {
-        "name": "Earn BTC Free",
-        "method": "post",
-        "url": "https://earnbtcfree.net/api/claim",
-        "data": {"addr": "___ADDR___"},
-        "enabled": true,
-        "priority": 2
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "name": "Quick Bitcoin Faucet",
+    "method": "post",
+    "url": "https://quickbitcoin-faucet.com/claim.php",
+    "data": {
+      "address": "___ADDR___"
     },
-    {
-        "name": "Bitcoin Spinner",
-        "method": "browser",
-        "url": "https://bitcoinspinner.com",
-        "data": {},
-        "enabled": true,
-        "priority": 2
+    "enabled": true,
+    "priority": 2
+  },
+  {
+    "name": "Claim Every Day",
+    "method": "post",
+    "url": "https://claimeveryday.com/api/crypto/claim",
+    "data": {
+      "coin_address": "___ADDR___"
     },
-    {
-        "name": "Faucet Premium",
-        "method": "post",
-        "url": "https://faucetpremium.io/claim",
-        "data": {"wallet_address": "___ADDR___"},
-        "enabled": true,
-        "priority": 1
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "name": "Monero Faucet Pro",
+    "method": "post",
+    "url": "https://monerofaucet.io/api/claim",
+    "data": {
+      "xmr_address": "___ADDR___"
     },
-    {
-        "name": "Quick Bitcoin Faucet",
-        "method": "post",
-        "url": "https://quickbitcoin-faucet.com/claim.php",
-        "data": {"address": "___ADDR___"},
-        "enabled": true,
-        "priority": 2
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "name": "Crypto Daily Claim",
+    "method": "post",
+    "url": "https://cryptodailyclaim.com/api/claim",
+    "data": {
+      "addr": "___ADDR___"
     },
-    {
-        "name": "Claim Every Day",
-        "method": "post",
-        "url": "https://claimeveryday.com/api/crypto/claim",
-        "data": {"coin_address": "___ADDR___"},
-        "enabled": true,
-        "priority": 1
+    "enabled": true,
+    "priority": 2
+  },
+  {
+    "name": "Bitcoin Cloud Faucet",
+    "method": "post",
+    "url": "https://bitcoincloud.io/claim",
+    "data": {
+      "address": "___ADDR___"
     },
-    {
-        "name": "Monero Faucet Pro",
-        "method": "post",
-        "url": "https://monerofaucet.io/api/claim",
-        "data": {"xmr_address": "___ADDR___"},
-        "enabled": true,
-        "priority": 1
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "name": "Free Coin Generator",
+    "method": "post",
+    "url": "https://freecoingenerator.net/claim",
+    "data": {
+      "wallet": "___ADDR___"
     },
-    {
-        "name": "Crypto Daily Claim",
-        "method": "post",
-        "url": "https://cryptodailyclaim.com/api/claim",
-        "data": {"addr": "___ADDR___"},
-        "enabled": true,
-        "priority": 2
+    "enabled": true,
+    "priority": 2
+  },
+  {
+    "name": "Instant Crypto Claim",
+    "method": "post",
+    "url": "https://instantcryptoclaim.com/api/claim",
+    "data": {
+      "address": "___ADDR___"
     },
-    {
-        "name": "Bitcoin Cloud Faucet",
-        "method": "post",
-        "url": "https://bitcoincloud.io/claim",
-        "data": {"address": "___ADDR___"},
-        "enabled": true,
-        "priority": 1
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "name": "Faucet Mania",
+    "method": "browser",
+    "url": "https://faucetmania.io",
+    "data": {},
+    "enabled": true,
+    "priority": 2
+  },
+  {
+    "name": "Bitcoin Express",
+    "method": "post",
+    "url": "https://bitcoinexpress.io/claim.php",
+    "data": {
+      "btc_address": "___ADDR___",
+      "action": "claim"
     },
-    {
-        "name": "Free Coin Generator",
-        "method": "post",
-        "url": "https://freecoingenerator.net/claim",
-        "data": {"wallet": "___ADDR___"},
-        "enabled": true,
-        "priority": 2
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "name": "Earn Crypto Direct",
+    "method": "post",
+    "url": "https://earncryptodirect.com/api/claim",
+    "data": {
+      "coin_addr": "___ADDR___"
     },
-    {
-        "name": "Instant Crypto Claim",
-        "method": "post",
-        "url": "https://instantcryptoclaim.com/api/claim",
-        "data": {"address": "___ADDR___"},
-        "enabled": true,
-        "priority": 1
+    "enabled": true,
+    "priority": 2
+  },
+  {
+    "name": "Multi Crypto Faucet",
+    "method": "post",
+    "url": "https://multicryptofaucet.com/claim",
+    "data": {
+      "address": "___ADDR___"
     },
-    {
-        "name": "Faucet Mania",
-        "method": "browser",
-        "url": "https://faucetmania.io",
-        "data": {},
-        "enabled": true,
-        "priority": 2
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "name": "Faucet Speed",
+    "method": "post",
+    "url": "https://faucetspeed.io/api/claim",
+    "data": {
+      "addr": "___ADDR___"
     },
-    {
-        "name": "Bitcoin Express",
-        "method": "post",
-        "url": "https://bitcoinexpress.io/claim.php",
-        "data": {"btc_address": "___ADDR___", "action": "claim"},
-        "enabled": true,
-        "priority": 1
+    "enabled": true,
+    "priority": 2
+  },
+  {
+    "name": "Bitcoin Faucet Plus",
+    "method": "post",
+    "url": "https://bitcoinfaucetplus.com/claim",
+    "data": {
+      "wallet_addr": "___ADDR___"
     },
-    {
-        "name": "Earn Crypto Direct",
-        "method": "post",
-        "url": "https://earncryptodirect.com/api/claim",
-        "data": {"coin_addr": "___ADDR___"},
-        "enabled": true,
-        "priority": 2
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "name": "Crypto Rewards Daily",
+    "method": "post",
+    "url": "https://cryptorewardsdaily.com/api/claim",
+    "data": {
+      "address": "___ADDR___"
     },
-    {
-        "name": "Multi Crypto Faucet",
-        "method": "post",
-        "url": "https://multicryptofaucet.com/claim",
-        "data": {"address": "___ADDR___"},
-        "enabled": true,
-        "priority": 1
+    "enabled": true,
+    "priority": 2
+  },
+  {
+    "name": "Faucet Capital",
+    "method": "browser",
+    "url": "https://faucetcapital.com",
+    "data": {},
+    "enabled": true,
+    "priority": 2
+  },
+  {
+    "name": "BTC Claim Bot",
+    "method": "post",
+    "url": "https://btcclaimbot.io/api/claim",
+    "data": {
+      "btc_addr": "___ADDR___"
     },
-    {
-        "name": "Faucet Speed",
-        "method": "post",
-        "url": "https://faucetspeed.io/api/claim",
-        "data": {"addr": "___ADDR___"},
-        "enabled": true,
-        "priority": 2
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "name": "Passive Crypto Income",
+    "method": "post",
+    "url": "https://passivecryptoincome.com/claim",
+    "data": {
+      "address": "___ADDR___"
     },
-    {
-        "name": "Bitcoin Faucet Plus",
-        "method": "post",
-        "url": "https://bitcoinfaucetplus.com/claim",
-        "data": {"wallet_addr": "___ADDR___"},
-        "enabled": true,
-        "priority": 1
+    "enabled": true,
+    "priority": 2
+  },
+  {
+    "name": "Claim Crypto Hourly",
+    "method": "post",
+    "url": "https://claimcryptohourly.com/api/claim",
+    "data": {
+      "addr": "___ADDR___"
     },
-    {
-        "name": "Crypto Rewards Daily",
-        "method": "post",
-        "url": "https://cryptorewardsdaily.com/api/claim",
-        "data": {"address": "___ADDR___"},
-        "enabled": true,
-        "priority": 2
+    "enabled": true,
+    "priority": 1
+  },
+  {
+    "name": "Faucet Rewards Pro",
+    "method": "post",
+    "url": "https://faucetrewardspro.io/claim",
+    "data": {
+      "wallet": "___ADDR___"
     },
-    {
-        "name": "Faucet Capital",
-        "method": "browser",
-        "url": "https://faucetcapital.com",
-        "data": {},
-        "enabled": true,
-        "priority": 2
-    },
-    {
-        "name": "BTC Claim Bot",
-        "method": "post",
-        "url": "https://btcclaimbot.io/api/claim",
-        "data": {"btc_addr": "___ADDR___"},
-        "enabled": true,
-        "priority": 1
-    },
-    {
-        "name": "Passive Crypto Income",
-        "method": "post",
-        "url": "https://passivecryptoincome.com/claim",
-        "data": {"address": "___ADDR___"},
-        "enabled": true,
-        "priority": 2
-    },
-    {
-        "name": "Claim Crypto Hourly",
-        "method": "post",
-        "url": "https://claimcryptohourly.com/api/claim",
-        "data": {"addr": "___ADDR___"},
-        "enabled": true,
-        "priority": 1
-    },
-    {
-        "name": "Faucet Rewards Pro",
-        "method": "post",
-        "url": "https://faucetrewardspro.io/claim",
-        "data": {"wallet": "___ADDR___"},
-        "enabled": true,
-        "priority": 2
-    }
+    "enabled": true,
+    "priority": 2
+  }
 ]
