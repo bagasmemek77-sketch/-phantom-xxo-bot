@@ -7,7 +7,7 @@
       "op": "r",
       "addr": "___ADDR___"
     },
-    "enabled": true,
+    "enabled": false,
     "priority": 1
   },
   {
